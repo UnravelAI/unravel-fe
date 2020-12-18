@@ -6,6 +6,10 @@ body {
 .toparea {
   padding-top: 80px;
   background: url("../imgs/HeaderBG.png");
+  height: 200px;
+}
+
+.toparea.extended {
   height: 580px;
 }
 
