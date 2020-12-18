@@ -1,5 +1,41 @@
 /*
 
+  Pages
+
+*/
+
+.page {
+  margin-top: 50px;
+  display: flex;
+  flex: 1 0 auto;
+  min-height: auto;
+}
+
+.page h2 {
+  margin: 20px 0;
+}
+
+/*
+
+  Forms
+
+*/
+
+.form-box {
+  margin-top: 30px;
+}
+
+.form-box input {
+  display: block;
+  min-width: 220px;
+}
+
+.form-box .input {
+  margin-top: 15px;
+}
+
+/*
+
   Headings
 
 */

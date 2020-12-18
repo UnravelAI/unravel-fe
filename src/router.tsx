@@ -14,12 +14,14 @@ const Router = () => {
     <BrowserRouter>
       <Switch>
         <Suspense fallback={<div>Loading</div>}>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
+          <div className="wrapper">
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+          </div>
         </Suspense>
       </Switch>
     </BrowserRouter>

@@ -18,6 +18,7 @@ export default function Header({ cta = false }) {
         </div>
         <div className="col-6">
           <nav>
+            <Link to="/">Home</Link>
             <a href="#">Features</a>
             <a href="#">How it works</a>
             <Link to="/register">Register</Link>
