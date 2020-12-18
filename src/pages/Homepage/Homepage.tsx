@@ -1,8 +1,9 @@
 import React from "react";
+// Page Components
 import Header from "./Components/Header";
 import Features from "./Components/Features";
 import HowItWorks from "./Components/HowItWorks";
-import Footer from "./Components/Footer";
+import Footer from "../../core/components/Footer";
 
 function Homepage() {
   return(

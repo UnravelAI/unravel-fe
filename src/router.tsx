@@ -7,14 +7,18 @@ import {
 
 // Pages
 const Home = React.lazy(() => import("./pages/Homepage"));
+const Register = React.lazy(() => import("./pages/Register"));
 
 const Router = () => {
   return(
     <BrowserRouter>
       <Switch>
         <Suspense fallback={<div>Loading</div>}>
-          <Route path="/">
+          <Route path="/" exact>
             <Home />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
         </Suspense>
       </Switch>

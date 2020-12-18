@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "../../../assets/imgs/Logo.png";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return(
@@ -15,7 +16,7 @@ export default function Header() {
           <nav>
             <a href="#">Features</a>
             <a href="#">How it works</a>
-            <a href="#">Register</a>
+            <Link to="/register">Register</Link>
             <a href="#">Login</a>
           </nav>
         </div>
@@ -25,7 +26,7 @@ export default function Header() {
           <h1>Bringing AI to remote education</h1>
           <div className="buttons">
             <a href="#" className="button outline">Learn More</a>
-            <a href="#" className="button green">Start Now</a>
+            <Link to="/register"><a className="button green">Start Now</a></Link>
           </div>
         </div>
       </div>
