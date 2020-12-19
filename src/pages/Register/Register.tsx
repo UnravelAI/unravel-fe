@@ -1,4 +1,6 @@
 import React from "react";
+// Assets
+import RegisterVector from "../../assets/imgs/registerationVector.jpg";
 // Page components
 import Header from "../../core/components/Header";
 import Footer from "../../core/components/Footer";
@@ -22,7 +24,10 @@ const Register = () => {
       <div className="page">
         <div className="container">
           <div className="row">
-            <div className="col-12">
+          <div className="col-6">
+              <img src={RegisterVector} alt="Register Now" style={{ marginTop: "80px" }}/>
+            </div>
+            <div className="col-6">
               <h2>Register</h2>
               <p style={{ color: "#c9c9c9" }}>Please fill the following fields to complete your registeration</p>
               <div className="form-box">
