@@ -95,6 +95,7 @@ const Register = () => {
                   <Controller 
                     name="passwordConfirmation"
                     rules={{
+                      required: "Password Confirmation cannot be empty",
                       validate: {
                         matchesPassword: (value) =>
                           value === watch("password") ||
