@@ -5,7 +5,7 @@ import RegisterVector from "../../assets/imgs/registerationVector.jpg";
 import Header from "../../core/components/Header";
 import Footer from "../../core/components/Footer";
 // UI
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, RadioGroup, Radio, FormControlLabel } from "@material-ui/core";
 // react-hook-form
 import {useForm, Controller} from "react-hook-form";
 
@@ -106,6 +106,23 @@ const Register = () => {
                     defaultValue=""
                     render={({onChange, value}) => (
                       <TextField error={errors?.passwordConfirmation} helperText={errors?.passwordConfirmation?.message} id="outlined-basic" label="Password Confirmation" variant="outlined" type="password" size="small" onChange={onChange} value={value}/>
+                    )}
+                  />
+                </div>
+                <div className="input gender">
+                  <label>Gender</label>
+                  <Controller 
+                    name="gender"
+                    rules={{
+                      required: "Gender cannot be empty",
+                    }}
+                    control={control}
+                    defaultValue=""
+                    render={({onChange, value}) => (
+                      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={onChange}>
+                        <FormControlLabel value="female" control={<Radio />} label="Female" />
+                        <FormControlLabel value="male" control={<Radio />} label="Male" />
+                      </RadioGroup>
                     )}
                   />
                 </div>
