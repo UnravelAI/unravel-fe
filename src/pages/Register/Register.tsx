@@ -8,14 +8,22 @@ import Footer from "../../core/components/Footer";
 import { TextField, Button, RadioGroup, Radio, FormControlLabel } from "@material-ui/core";
 // react-hook-form
 import {useForm, Controller} from "react-hook-form";
+import API from "../../axios";
 
 const Register = () => {
+  // Form validation setup
   const { control, handleSubmit, errors, watch } = useForm({
     mode: "onChange",
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    try {
+      delete data.passwordConfirmation;
+      await API.post("/users", data);
+      alert("Registeration succeeded");
+    } catch (error) {
+      alert("Error: " + error.message);
+    }
   }
 
   return(
