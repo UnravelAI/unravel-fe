@@ -1,11 +1,11 @@
 import React from "react";
 // Assets
-import RegisterVector from "../../assets/imgs/registerationVector.jpg";
+import LoginVector from "../../assets/imgs/login.png";
 // Page components
 import Header from "../../core/components/Header";
 import Footer from "../../core/components/Footer";
 // UI
-import { TextField, Button, RadioGroup, Radio, FormControlLabel } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 // react-hook-form
 import {useForm, Controller} from "react-hook-form";
 import API from "../../axios";
@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 
 const Login = () => {
   // Form validation setup
-  const { control, handleSubmit, errors, watch } = useForm({
+  const { control, handleSubmit, errors } = useForm({
     mode: "onChange",
   });
 
@@ -56,7 +56,7 @@ const Login = () => {
         <div className="container">
           <div className="row">
           <div className="col-6">
-              <img src={RegisterVector} alt="Register Now" style={{ marginTop: "80px" }}/>
+              <img src={LoginVector} alt="Register Now" style={{ marginTop: "80px" }}/>
             </div>
             <div className="col-6">
               <h2>Login</h2>
@@ -84,10 +84,6 @@ const Login = () => {
                     name="password"
                     rules={{
                       required: "Password cannot be empty",
-                      pattern: {
-                        value: /.*[0-9].*/,
-                        message: "Password must contain atleast 1 number"
-                      }
                     }}
                     control={control}
                     defaultValue=""

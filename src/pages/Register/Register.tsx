@@ -1,6 +1,6 @@
 import React from "react";
 // Assets
-import RegisterVector from "../../assets/imgs/registerationVector.jpg";
+import RegisterVector from "../../assets/imgs/registeration.png";
 // Page components
 import Header from "../../core/components/Header";
 import Footer from "../../core/components/Footer";
@@ -25,7 +25,7 @@ const Register = () => {
     try {
       delete data.passwordConfirmation;
       await API.post("/users", data);
-      history.push("/");
+      history.push("/login");
       toast.success('You have succesfully registered!', {
         position: "top-right",
         autoClose: 3000,
@@ -56,7 +56,7 @@ const Register = () => {
         <div className="container">
           <div className="row">
           <div className="col-6">
-              <img src={RegisterVector} alt="Register Now" style={{ marginTop: "80px" }}/>
+              <img src={RegisterVector} alt="Register Now" style={{ marginTop: "80px", width: "500px", height: "500px" }}/>
             </div>
             <div className="col-6">
               <h2>Register</h2>
