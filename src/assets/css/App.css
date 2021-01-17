@@ -28,6 +28,14 @@ html {
   flex: 0 0 60px;
 }
 
+.mini-header {
+  padding-top: 30px;
+  background: url("../imgs/HeaderBG.png");
+  height: 100px;
+  display: flex;
+  flex: 0 0 60px;
+}
+
 .toparea.extended {
   height: 580px;
 }

@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Home = React.lazy(() => import("./pages/Homepage"));
 const Register = React.lazy(() => import("./pages/Register"));
 const Login = React.lazy(() => import("./pages/Login"));
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 
 const Router = () => {
   return(
@@ -28,6 +29,9 @@ const Router = () => {
               </Route>
               <Route path="/login">
                 <Login />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard />
               </Route>
             </div>
           </Suspense>
