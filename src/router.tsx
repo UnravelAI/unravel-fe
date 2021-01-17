@@ -4,6 +4,8 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 // Pages
 const Home = React.lazy(() => import("./pages/Homepage"));
@@ -11,20 +13,23 @@ const Register = React.lazy(() => import("./pages/Register"));
 
 const Router = () => {
   return(
-    <BrowserRouter>
-      <Switch>
-        <Suspense fallback={<div>Loading</div>}>
-          <div className="wrapper">
-            <Route path="/" exact>
-              <Home />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-          </div>
-        </Suspense>
-      </Switch>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Switch>
+          <Suspense fallback={<div>Loading</div>}>
+            <div className="wrapper">
+              <ToastContainer />
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+            </div>
+          </Suspense>
+        </Switch>
+      </BrowserRouter>
+    </>
   );  
 }
 

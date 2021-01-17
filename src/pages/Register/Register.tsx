@@ -9,6 +9,9 @@ import { TextField, Button, RadioGroup, Radio, FormControlLabel } from "@materia
 // react-hook-form
 import {useForm, Controller} from "react-hook-form";
 import API from "../../axios";
+// Toasts
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
   // Form validation setup
@@ -16,13 +19,33 @@ const Register = () => {
     mode: "onChange",
   });
 
+  const history = useHistory();
+
   const onSubmit = async (data: any) => {
     try {
       delete data.passwordConfirmation;
       await API.post("/users", data);
-      alert("Registeration succeeded");
+      history.push("/");
+      toast.success('You have succesfully registered!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
+
     } catch (error) {
-      alert("Error: " + error.message);
+      toast.error('An error occured while registeration!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
     }
   }
 
