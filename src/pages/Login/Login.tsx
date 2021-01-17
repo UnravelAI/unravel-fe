@@ -23,10 +23,9 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      delete data.passwordConfirmation;
-      await API.post("/users", data);
+      await API.post("/users/login", data);
       history.push("/");
-      toast.success('You have succesfully registered!', {
+      toast.success('You have been logged in succesfully!', {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -37,7 +36,7 @@ const Login = () => {
         });
 
     } catch (error) {
-      toast.error('An error occured while registeration!', {
+      toast.error('Invalid Credentials!', {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
