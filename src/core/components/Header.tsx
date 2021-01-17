@@ -21,8 +21,8 @@ export default function Header({ cta = false }) {
             <Link to="/">Home</Link>
             <a href="#">Features</a>
             <a href="#">How it works</a>
+            <Link to="/login">Login</Link>
             <Link to="/register">Register</Link>
-            <a href="#">Login</a>
           </nav>
         </div>
       </div>

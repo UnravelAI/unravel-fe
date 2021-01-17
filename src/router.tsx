@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // Pages
 const Home = React.lazy(() => import("./pages/Homepage"));
 const Register = React.lazy(() => import("./pages/Register"));
+const Login = React.lazy(() => import("./pages/Login"));
 
 const Router = () => {
   return(
@@ -24,6 +25,9 @@ const Router = () => {
               </Route>
               <Route path="/register">
                 <Register />
+              </Route>
+              <Route path="/login">
+                <Login />
               </Route>
             </div>
           </Suspense>
