@@ -7,17 +7,18 @@ export default function Header() {
     <div className="toparea mini-header">
     <div className="container">
       <div className="row header">
-        <div className="col-5">
+        <div className="col-4">
           <div className="logo">
             <img src={Logo} alt="Unravel Logo" style={{ width: "173px", height: "38px" }}/>
         </div>
         </div>
-        <div className="col-7">
+        <div className="col-8">
           <nav>
             <Link to="/dashboard">Dashboard</Link>
             <a href="#">Courses</a>
             <a href="#">Enrolled Students</a>
             <a href="#">Published Materials</a>
+            <a href="#" style={{ color: "white", opacity: 1, backgroundColor: "#a85e5e", padding: "10px" }}>Logout</a>
           </nav>
         </div>
       </div>
