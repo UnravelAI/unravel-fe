@@ -24,7 +24,7 @@ const Login = () => {
   const onSubmit = async (data: any) => {
     try {
       await API.post("/users/login", data);
-      history.push("/");
+      history.push("/dashboard");
       toast.success('You have been logged in succesfully!', {
         position: "top-right",
         autoClose: 3000,
