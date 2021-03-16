@@ -7,11 +7,12 @@ import Footer from "../../core/components/Footer";
 // UI
 import { TextField, Button } from "@material-ui/core";
 // react-hook-form
-import {useForm, Controller} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import API from "../../axios";
 // Toasts
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { authInterceptor } from "../../axios";
 
 const Login = () => {
   // Form validation setup
@@ -23,7 +24,9 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      await API.post("/users/login", data);
+      const user = await API.post("/login", data);
+      localStorage.setItem("accessToken", user.data.accessToken);
+      authInterceptor.activate();
       history.push("/dashboard");
       toast.success('You have been logged in succesfully!', {
         position: "top-right",
@@ -33,7 +36,7 @@ const Login = () => {
         pauseOnHover: true,
         draggable: false,
         progress: undefined,
-        });
+      });
 
     } catch (error) {
       toast.error('Invalid Credentials!', {
@@ -44,25 +47,25 @@ const Login = () => {
         pauseOnHover: true,
         draggable: false,
         progress: undefined,
-        });
+      });
     }
   }
 
-  return(
+  return (
     <>
       <Header />
       <div className="page">
         <div className="container">
           <div className="row">
-          <div className="col-6">
-              <img src={LoginVector} alt="Register Now" style={{ marginTop: "80px" }}/>
+            <div className="col-6">
+              <img src={LoginVector} alt="Register Now" style={{ marginTop: "80px" }} />
             </div>
             <div className="col-6">
               <h2>Login</h2>
               <p style={{ color: "#c9c9c9" }}>Please enter your credentials to navigate to your account</p>
               <div className="form-box">
                 <div className="input email">
-                  <Controller 
+                  <Controller
                     name="email"
                     rules={{
                       required: "Email cannot be empty",
@@ -73,21 +76,21 @@ const Login = () => {
                     }}
                     control={control}
                     defaultValue=""
-                    render={({onChange, value}) => (
-                      <TextField error={errors?.email} helperText={errors?.email?.message} id="outlined-basic" label="Email" variant="outlined" size="small" onChange={onChange} value={value}/>
+                    render={({ onChange, value }) => (
+                      <TextField error={errors?.email} helperText={errors?.email?.message} id="outlined-basic" label="Email" variant="outlined" size="small" onChange={onChange} value={value} />
                     )}
                   />
                 </div>
                 <div className="input password">
-                  <Controller 
+                  <Controller
                     name="password"
                     rules={{
                       required: "Password cannot be empty",
                     }}
                     control={control}
                     defaultValue=""
-                    render={({onChange, value}) => (
-                      <TextField error={errors?.password} helperText={errors?.password?.message} id="outlined-basic" label="Password" variant="outlined" type="password" size="small" onChange={onChange} value={value}/>
+                    render={({ onChange, value }) => (
+                      <TextField error={errors?.password} helperText={errors?.password?.message} id="outlined-basic" label="Password" variant="outlined" type="password" size="small" onChange={onChange} value={value} />
                     )}
                   />
                 </div>

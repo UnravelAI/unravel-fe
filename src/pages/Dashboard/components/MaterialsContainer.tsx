@@ -6,30 +6,37 @@ import MaterialItem from "./MaterialItem";
 import ReactLoading from 'react-loading';
 // UI
 import { Button } from "@material-ui/core";
+// Modal
+import AddMaterial from "./AddMaterial";
+// API
+import API from "../../../axios";
 
 type Material = {
-  name: string,
+  id?: number,
+  updatedAt?: string,
+  createdAt?: string,
+  title: string,
   description: string
 }
 
 const MaterialsContainer = () => {
   const [materials, setMaterials] = useState<Material[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [showAddModal, setShowAddModal] = useState<boolean>(false);
 
   useEffect(() => {
     // Fetch Materials
-    // const fetchMaterials = async () => {
-
-    // }
-    // fetchMaterials();
-
-    // Emulate async request
-    setTimeout(() => {
-      setMaterials([{ name: "Lecture 2", description: "Basics of Programming" }, { name: "Lecture 1", description: "Basics of Math" }]);
-      //setMaterials([]);
+    const fetchMaterials = async () => {
+      const materialsRequest = await API.get("/users/materials");
+      setMaterials(materialsRequest.data.data);
       setLoading(false);
-    }, 2000);
-  }, []);
+    }
+    fetchMaterials();
+  }, [loading]);
+
+  const refreshMaterials = () => {
+    setLoading(true);
+  }
 
   // If container is loading
   if (loading) {
@@ -53,10 +60,11 @@ const MaterialsContainer = () => {
         </div>
       }
       <div style={{ display: "flex", alignItems: "center" }}>
-        <Button variant="contained" color="primary" style={{ marginTop: "20px" }}>
+        <Button variant="contained" color="primary" style={{ marginTop: "20px" }} onClick={() => setShowAddModal(true)}>
           Create New Material
         </Button>
       </div>
+      <AddMaterial refreshMaterials={refreshMaterials} isOpen={showAddModal} setIsOpen={setShowAddModal} />
     </div>
   );
 }
