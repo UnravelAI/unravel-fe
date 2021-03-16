@@ -169,3 +169,49 @@ footer .aast {
 footer .rights {
   color: #6d759d;
 }
+
+.materialContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.materialBox {
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transition: 0.4s;
+}
+
+.materialBox:hover {
+  background-color: #d9d9d9;
+}
+
+.materialBox h5 {
+  color: #252a42
+}
+
+.materialBox p {
+  color: #ababab;
+}
+
+.materialBox .type {
+  background-color: #6d759d;
+  color: white;
+  align-self: center;
+  padding: 5px;
+}
+
+.loadingIcon {
+  margin: 0 auto;
+}
+
+
+
+
+
+
+
+
