@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import React, { Suspense } from "react";
 import {
   BrowserRouter,
   Switch,
@@ -12,9 +12,10 @@ const Home = React.lazy(() => import("./pages/Homepage"));
 const Register = React.lazy(() => import("./pages/Register"));
 const Login = React.lazy(() => import("./pages/Login"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const Material = React.lazy(() => import("./pages/Material"));
 
 const Router = () => {
-  return(
+  return (
     <>
       <BrowserRouter>
         <Switch>
@@ -33,12 +34,15 @@ const Router = () => {
               <Route path="/dashboard">
                 <Dashboard />
               </Route>
+              <Route path="/material/:id/:title">
+                <Material />
+              </Route>
             </div>
           </Suspense>
         </Switch>
       </BrowserRouter>
     </>
-  );  
+  );
 }
 
 export default Router;

@@ -177,12 +177,14 @@ footer .rights {
 
 .materialBox {
   background-color: #f0f0f0;
-  padding: 20px;
+  padding: 40px;
   margin-top: 10px;
+  border-radius: 5px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   transition: 0.4s;
+  cursor: pointer;
 }
 
 .materialBox:hover {
@@ -201,13 +203,52 @@ footer .rights {
   background-color: #6d759d;
   color: white;
   align-self: center;
-  padding: 5px;
+  padding: 10px 15px;
+  border-radius: 50px;
 }
 
 .loadingIcon {
   margin: 0 auto;
 }
 
+.videoContainer {
+  background-color: #2d2d2d;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.inputfile + label{
+  background-color: #121212;
+  border-radius: 50px;
+  padding: 25px 35px;
+  border: 0;
+  font-size: 17;
+  font-weight: bold;
+  color: white;
+  align-self: center;
+  transition: 0.5s all;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label:hover {
+  background-color: #252a42;
+}
+
+.processing {
+  align-self: center;
+  color: white;
+}
 
 
 
