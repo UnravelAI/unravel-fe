@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import {
   BrowserRouter,
   Switch,
@@ -14,7 +14,22 @@ const Login = React.lazy(() => import("./pages/Login"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Material = React.lazy(() => import("./pages/Material"));
 
+const PrivateRoute = ({ ...rest }) => {
+  return (
+    <Route {...rest} />
+  );
+}
+
 const Router = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <>
       <BrowserRouter>
@@ -23,7 +38,7 @@ const Router = () => {
             <div className="wrapper">
               <ToastContainer />
               <Route path="/" exact>
-                <Home />
+                <Home isLoggedIn={isLoggedIn} />
               </Route>
               <Route path="/register">
                 <Register />
@@ -32,7 +47,7 @@ const Router = () => {
                 <Login />
               </Route>
               <Route path="/dashboard">
-                <Dashboard />
+                <Dashboard isLoggedIn={isLoggedIn} />
               </Route>
               <Route path="/material/:id/:title">
                 <Material />
