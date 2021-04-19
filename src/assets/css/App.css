@@ -250,6 +250,53 @@ footer .rights {
   color: white;
 }
 
+.transcriptionArea {
+  background-color: #f2f2f2;
+  padding: 40px 25px;
+  font-size: 27px;
+  min-height: 300px;
+  margin-bottom: 50px;
+  user-select: none;
+}
+
+.word {
+  padding: 5px;
+  margin-right: 5px;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.word:hover {
+  background-color: #A85E5E;
+  color: white;
+}
+
+.highlightedWord {
+}
+
+.nonHighlightedWord {
+  opacity: 0.2;
+}
+
+.materialTitle {
+  background-color: #22725f;
+  padding: 20px 30px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.removed {
+  text-decoration: line-through;
+  background-color: #A85E5E;
+  color: white;
+}
 
 
 

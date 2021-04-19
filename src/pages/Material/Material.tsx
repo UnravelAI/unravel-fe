@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // Page components
 import DashboardHeader from "../../core/components/DashboardHeader";
 import Footer from "../../core/components/Footer";
@@ -7,25 +7,45 @@ import API from "../../axios";
 // Toasts
 import { toast } from "react-toastify";
 import ReactLoading from 'react-loading';
+import VideoPlayer from "./VideoPlayer";
 
 type Material = {
     id?: number,
     updatedAt?: string,
     createdAt?: string,
     title: string,
-    description: string
+    description: string,
+    video: any
 }
 
 const Material = () => {
-    const { id, title }: { id: string, title: string } = useParams();
+    const { id }: { id: string } = useParams();
+    const [material, setMaterial] = useState<Material | null>(null);
     const [processing, setProcessing] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const handleVideo = async (e: any) => {
+    const [loading, setLoading] = useState(true);
+    const playerRef = useRef(null);
+
+    useEffect(() => {
+        const getMaterial = async () => {
+            try {
+                const response = await API.get(`/users/materials/${id}/`);
+                console.log(response.data.data);
+                setMaterial(response.data.data);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        getMaterial();
+    }, []);
+
+    const handleVideoUpload = async (e: any) => {
         try {
             setLoading(true);
             let formData = new FormData();
             formData.append('video', e.target.files[0]);
-            await API.post("/users/materials/video/upload", formData, {
+            await API.post(`/users/materials/video/material/${id}/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -51,22 +71,33 @@ const Material = () => {
             <DashboardHeader active="Dashboard" />
             <div className="page">
                 <div className="container">
-                    <h3>{title}</h3>
-                    <div className="videoContainer">
-                        {loading ?
-                            <div style={{ alignSelf: "center" }}>
-                                <ReactLoading color="#fff" className="loadingIcon" />
+                    {material !== null &&
+                        <div className="materialTitle">
+                            <div>
+                                <h3>{material.title}</h3>
+                                <p style={{ opacity: 0.5, paddingTop: "3px" }}>Algebra</p>
                             </div>
-                            :
-                            (processing ?
-                                <h6 className="processing">This video is currently being processed</h6>
+                            <p>Status: <b>Unpublished</b></p>
+                        </div>
+                    }
+                    {!loading && material?.video !== null ?
+                        <VideoPlayer streamingURL={material?.video.streamingUrl} /> :
+                        <div className="videoContainer">
+                            {loading ?
+                                <div style={{ alignSelf: "center" }}>
+                                    <ReactLoading color="#fff" className="loadingIcon" />
+                                </div>
                                 :
-                                <>
-                                    <input onChange={handleVideo} type="file" name="file" id="file" className="inputfile" />
-                                    <label htmlFor="file">Upload a Video</label>
-                                </>
-                            )}
-                    </div>
+                                (processing ?
+                                    <h6 className="processing">This video is currently being processed</h6>
+                                    :
+                                    <>
+                                        <input onChange={handleVideoUpload} type="file" name="file" id="file" className="inputfile" />
+                                        <label htmlFor="file">Upload a Video</label>
+                                    </>
+                                )}
+                        </div>
+                    }
                 </div>
             </div>
             <Footer />
