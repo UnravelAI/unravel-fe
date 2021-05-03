@@ -28,10 +28,12 @@ const AuthInterceptor = () => {
       // Handle 401 by clearning the access token
       responseInterceptor = axios.interceptors.response.use(
         async (config) => {
-          if (config.status === 401) {
-            localStorage.setItem('accessToken', null);
-          }
           return config;
+        }, (error) => {
+          if (error.response.status === 401) {
+            localStorage.removeItem('accessToken');
+          }
+          return Promise.reject(error);
         }
       );
     },

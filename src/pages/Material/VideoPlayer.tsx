@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactHlsPlayer from 'react-hls-player';
-import transcription from "./exampleTranscription.json";
+import { Button } from "@material-ui/core";
 
 type RemovedDuration = {
     index: number,
@@ -8,7 +8,17 @@ type RemovedDuration = {
     duration: number
 }
 
-const VideoPlayer = ({ streamingURL }: { streamingURL: string }) => {
+type Material = {
+    id?: number,
+    updatedAt?: string,
+    createdAt?: string,
+    title: string,
+    description: string,
+    video: any,
+    document?: any,
+}
+
+const VideoPlayer = ({ material, streamingURL }: { material: any, streamingURL: string }) => {
     const playerRef = useRef<HTMLVideoElement>(null);
     const [currentPosition, setCurrentPosition] = useState<number>(0);
     const [removedIndices, setRemovedIndices] = useState<number[]>([]);
@@ -52,20 +62,6 @@ const VideoPlayer = ({ streamingURL }: { streamingURL: string }) => {
         });
     }
 
-    const optimizeRemovedDurations = (removedDurations: RemovedDuration[]) => {
-        const removedDurationsCopy = [...removedDurations];
-        return removedDurations.map((duration, index) => {
-            /*
-                index
-                starttime,
-                duration
-            */
-            if (removedDurations[index + 1]) {
-
-            }
-        });
-    }
-
     // Watch currentPosition to seek if the word was removed
     useEffect(() => {
         removedDurations?.forEach((duration) => {
@@ -88,7 +84,7 @@ const VideoPlayer = ({ streamingURL }: { streamingURL: string }) => {
             />
             <div className="transcriptionArea">
                 <p>
-                    {transcription.results.items.map((word, index) => {
+                    {material.video.transcription.results.items.map((word: any, index: any) => {
                         if (word.type === "pronunciation") {
                             let className = "word";
                             if (currentPosition > Number(word.start_time)) {
@@ -105,6 +101,11 @@ const VideoPlayer = ({ streamingURL }: { streamingURL: string }) => {
                         }
                     })}
                 </p>
+                <div style={{ alignSelf: "center" }}>
+                    <Button variant="contained" color="inherit" style={{ backgroundColor: "#3e9681", color: "#fff", padding: "20px 30px", marginTop: "20px" }}>
+                        Publish Video
+                    </Button>
+                </div>
             </div>
         </>
     );

@@ -2,6 +2,7 @@ body {
   font-family: "Puritan", sans-serif;
   font-weight: 700;
   height: 100vh;
+  background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
 }
@@ -30,8 +31,8 @@ html {
 
 .mini-header {
   padding-top: 30px;
+  padding-bottom: 30px;
   background: url("../imgs/HeaderBG.png");
-  height: 100px;
   display: flex;
   flex: 0 0 60px;
 }
@@ -173,10 +174,11 @@ footer .rights {
 .materialContainer {
   display: flex;
   flex-direction: row;
+  padding-bottom: 100px;
 }
 
 .materialBox {
-  background-color: #f0f0f0;
+  background-color: #fff;
   padding: 40px;
   margin-top: 10px;
   border-radius: 5px;
@@ -185,10 +187,24 @@ footer .rights {
   justify-content: space-between;
   transition: 0.4s;
   cursor: pointer;
+  -webkit-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
+  -moz-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
+  box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
 }
 
 .materialBox:hover {
-  background-color: #d9d9d9;
+  -webkit-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.4);
+  -moz-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.4);
+  box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.4);
+}
+
+.materialDate {
+  align-self: flex-start;
+  background-color: #f3f3f3;
+  color: white;
+  margin-bottom: 5px;
+  padding: 5px;
+  border-radius: 5px;
 }
 
 .materialBox h5 {
@@ -199,12 +215,17 @@ footer .rights {
   color: #ababab;
 }
 
-.materialBox .type {
-  background-color: #6d759d;
+.materialBox .tag {
   color: white;
+  background-color: #3e9681;
   align-self: center;
   padding: 10px 15px;
   border-radius: 50px;
+  margin-left: 10px;
+}
+
+.materialBox .type {
+  background-color: #6d759d;
 }
 
 .loadingIcon {
@@ -217,7 +238,6 @@ footer .rights {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-top: 20px;
 }
 
 .inputfile + label{
@@ -241,6 +261,10 @@ footer .rights {
 	z-index: -1;
 }
 
+.page {
+  margin-bottom: 50px;
+}
+
 .inputfile + label:hover {
   background-color: #252a42;
 }
@@ -251,7 +275,9 @@ footer .rights {
 }
 
 .transcriptionArea {
-  background-color: #f2f2f2;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
   padding: 40px 25px;
   font-size: 27px;
   min-height: 300px;

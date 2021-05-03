@@ -4,10 +4,12 @@ import DashboardHeader from "../../core/components/DashboardHeader";
 import Footer from "../../core/components/Footer";
 import { useParams } from "react-router-dom";
 import API from "../../axios";
+import axios from "axios";
 // Toasts
 import { toast } from "react-toastify";
 import ReactLoading from 'react-loading';
 import VideoPlayer from "./VideoPlayer";
+import DocumentViewer from "./DocumentViewer";
 
 type Material = {
     id?: number,
@@ -15,7 +17,8 @@ type Material = {
     createdAt?: string,
     title: string,
     description: string,
-    video: any
+    video: any,
+    document?: any,
 }
 
 const Material = () => {
@@ -23,14 +26,23 @@ const Material = () => {
     const [material, setMaterial] = useState<Material | null>(null);
     const [processing, setProcessing] = useState(false);
     const [loading, setLoading] = useState(true);
-    const playerRef = useRef(null);
 
     useEffect(() => {
         const getMaterial = async () => {
             try {
+                let material: Material = {
+                    title: "",
+                    description: "",
+                    video: {},
+                };
                 const response = await API.get(`/users/materials/${id}/`);
                 console.log(response.data.data);
-                setMaterial(response.data.data);
+                material = Object.assign({}, response.data.data);
+                if (response.data.data?.video?.jobCompleted === true) {
+                    const { data } = await axios.get(response.data.data.video.transcriptionUrl);
+                    material.video.transcription = data;
+                }
+                setMaterial(material);
             } catch (error) {
                 console.log(error);
             } finally {
@@ -45,7 +57,7 @@ const Material = () => {
             setLoading(true);
             let formData = new FormData();
             formData.append('video', e.target.files[0]);
-            await API.post(`/users/materials/video/material/${id}/upload`, formData, {
+            await API.post(`/users/materials/${id}/video`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -66,6 +78,7 @@ const Material = () => {
             console.log(error.response);
         }
     }
+    console.log(material?.document.length);
     return (
         <>
             <DashboardHeader active="Dashboard" />
@@ -74,26 +87,31 @@ const Material = () => {
                     {material !== null &&
                         <div className="materialTitle">
                             <div>
-                                <h3>{material.title}</h3>
+                                <h3>{material.title} (Preview)</h3>
                                 <p style={{ opacity: 0.5, paddingTop: "3px" }}>Algebra</p>
                             </div>
                             <p>Status: <b>Unpublished</b></p>
                         </div>
                     }
-                    {!loading && material?.video !== null ?
-                        <VideoPlayer streamingURL={material?.video.streamingUrl} /> :
+                    {material?.document.length > 0 || !loading && material?.video !== null && material?.video?.jobCompleted === true ?
+                        (material?.document.length > 0 ?
+                            <DocumentViewer url="https://arxiv.org/pdf/quant-ph/0410100.pdf" />
+                            :
+                            <VideoPlayer material={material} streamingURL={material?.video.streamingUrl} />
+                        )
+                        :
                         <div className="videoContainer">
                             {loading ?
                                 <div style={{ alignSelf: "center" }}>
                                     <ReactLoading color="#fff" className="loadingIcon" />
                                 </div>
                                 :
-                                (processing ?
+                                (processing || material?.video?.jobCompleted === false ?
                                     <h6 className="processing">This video is currently being processed</h6>
                                     :
                                     <>
                                         <input onChange={handleVideoUpload} type="file" name="file" id="file" className="inputfile" />
-                                        <label htmlFor="file">Upload a Video</label>
+                                        <label htmlFor="file">Upload File</label>
                                     </>
                                 )}
                         </div>

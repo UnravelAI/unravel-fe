@@ -16,7 +16,8 @@ type Material = {
   updatedAt?: string,
   createdAt?: string,
   title: string,
-  description: string
+  description: string,
+  video?: any,
 }
 
 const MaterialsContainer = () => {
@@ -28,6 +29,7 @@ const MaterialsContainer = () => {
     // Fetch Materials
     const fetchMaterials = async () => {
       const materialsRequest = await API.get("/users/materials");
+      console.log(materialsRequest.data.data);
       setMaterials(materialsRequest.data.data);
       setLoading(false);
     }
@@ -56,7 +58,7 @@ const MaterialsContainer = () => {
         </div>
         :
         <div className="materialsContainer">
-          {materials.map((material) => <MaterialItem material={material} />)}
+          {materials.reverse().map((material) => <MaterialItem material={material} />)}
         </div>
       }
       <div style={{ display: "flex", alignItems: "center" }}>

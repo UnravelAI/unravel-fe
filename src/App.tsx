@@ -9,6 +9,7 @@ import { authInterceptor } from "./axios";
 function App() {
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
+      console.log("activated");
       authInterceptor.activate();
     }
   }, []);

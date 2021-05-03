@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 // UI
-import { TextField, Button, TextareaAutosize } from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 import API from "../../../axios";
 // react-hook-form
 import { useForm, Controller } from "react-hook-form";
