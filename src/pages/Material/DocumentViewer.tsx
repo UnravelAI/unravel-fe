@@ -1,23 +1,26 @@
-import React from "react";
-import { Viewer } from '@react-pdf-viewer/core';
-// Plugins
+import React, { useEffect } from "react";
+
+import { Viewer, Worker } from '@react-pdf-viewer/core';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
-// Import styles
+
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
-
-// Create new plugin instance
-const defaultLayoutPluginInstance = defaultLayoutPlugin();
+import axios from "axios";
 
 const DocumentViewer = ({ url }: { url: string }) => {
+    const defaultLayoutPluginInstance = defaultLayoutPlugin();
     return (
-        <Viewer
-            fileUrl={url}
-            plugins={[
-                // Register plugins
-                defaultLayoutPluginInstance,
-            ]}
-        />
+        <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.js">
+            <div style={{ height: '750px' }}>
+                <Viewer
+                    fileUrl={url}
+                    onDocumentLoad={(file) => console.log(file)}
+                    plugins={[
+                        defaultLayoutPluginInstance,
+                    ]}
+                />
+            </div>
+        </Worker>
     );
 }
 

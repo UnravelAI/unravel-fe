@@ -38,9 +38,10 @@ const Material = () => {
                 const response = await API.get(`/users/materials/${id}/`);
                 console.log(response.data.data);
                 material = Object.assign({}, response.data.data);
-                if (response.data.data?.video?.jobCompleted === true) {
+                if (response.data.data?.video?.status === "editable") {
                     const { data } = await axios.get(response.data.data.video.transcriptionUrl);
                     material.video.transcription = data;
+                    console.log(material.video);
                 }
                 setMaterial(material);
             } catch (error) {
@@ -93,9 +94,9 @@ const Material = () => {
                             <p>Status: <b>Unpublished</b></p>
                         </div>
                     }
-                    {material?.document.length > 0 || !loading && material?.video !== null && material?.video?.jobCompleted === true ?
+                    {material?.document.length > 0 || !loading && material?.video !== null && material?.video?.status === "editable" ?
                         (material?.document.length > 0 ?
-                            <DocumentViewer url="https://arxiv.org/pdf/quant-ph/0410100.pdf" />
+                            <DocumentViewer url={material?.document[0].fileUrl} />
                             :
                             <VideoPlayer material={material} streamingURL={material?.video.streamingUrl} />
                         )
@@ -106,7 +107,7 @@ const Material = () => {
                                     <ReactLoading color="#fff" className="loadingIcon" />
                                 </div>
                                 :
-                                (processing || material?.video?.jobCompleted === false ?
+                                (processing || material?.video?.status === "processing" ?
                                     <h6 className="processing">This video is currently being processed</h6>
                                     :
                                     <>

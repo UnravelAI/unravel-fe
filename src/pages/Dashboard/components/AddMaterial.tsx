@@ -19,7 +19,7 @@ const modalStyle = {
         marginRight: '-50%',
         padding: "50px",
         border: "0",
-        boxShadow: "3px 2px 20px rgba(1, 1, 1, 0.1)"
+        boxShadow: "3px 2px 20px rgba(1, 1, 1, 0.1)",
     }
 };
 
@@ -66,7 +66,7 @@ const AddMaterial = ({ isOpen, setIsOpen, refreshMaterials }: { isOpen: boolean,
     return (
         <Modal isOpen={isOpen} style={modalStyle} shouldCloseOnOverlayClick={true} onRequestClose={() => setIsOpen(false)}>
             <h3>Add Material</h3>
-            <div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
                 <Controller
                     name="title"
                     rules={{
@@ -86,7 +86,7 @@ const AddMaterial = ({ isOpen, setIsOpen, refreshMaterials }: { isOpen: boolean,
                     control={control}
                     defaultValue=""
                     render={({ onChange, value }) => (
-                        <TextField error={errors?.description} helperText={errors?.description?.message} id="outlined-basic" label="Description" variant="outlined" size="small" onChange={onChange} value={value} />
+                        <TextField error={errors?.description} helperText={errors?.description?.message} id="outlined-basic" label="Description" variant="outlined" size="small" onChange={onChange} value={value} style={{ marginTop: "5px" }} />
                     )}
                 />
             </div>

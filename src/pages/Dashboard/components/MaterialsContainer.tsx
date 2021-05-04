@@ -4,6 +4,7 @@ import EmptyProjectsVector from "../../../assets/imgs/emptyProjects.png";
 // Components
 import MaterialItem from "./MaterialItem";
 import ReactLoading from 'react-loading';
+import CourseItem from "./CourseItem";
 // UI
 import { Button } from "@material-ui/core";
 // Modal
@@ -57,15 +58,29 @@ const MaterialsContainer = () => {
           <h4 style={{ marginTop: "25px", color: "#a6a6a6" }}>You don't have any materials yet!</h4>
         </div>
         :
-        <div className="materialsContainer">
-          {materials.reverse().map((material) => <MaterialItem material={material} />)}
+        <div className="row">
+          <div className="materialsContainer col-4">
+            <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <h3>Courses</h3>
+              <Button variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
+                New Course
+              </Button>
+            </div>
+            <CourseItem name="Algebra" />
+            <CourseItem name="Computer Science" />
+            <CourseItem name="Math 5" />
+          </div>
+          <div className="materialsContainer col-8">
+            <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+              <h3>Materials</h3>
+              <Button variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
+                New Material
+              </Button>
+            </div>
+            {materials.reverse().map((material) => <MaterialItem material={material} />)}
+          </div>
         </div>
       }
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Button variant="contained" color="primary" style={{ marginTop: "20px" }} onClick={() => setShowAddModal(true)}>
-          Create New Material
-        </Button>
-      </div>
       <AddMaterial refreshMaterials={refreshMaterials} isOpen={showAddModal} setIsOpen={setShowAddModal} />
     </div>
   );

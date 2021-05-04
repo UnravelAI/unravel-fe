@@ -30,7 +30,7 @@ const AuthInterceptor = () => {
         async (config) => {
           return config;
         }, (error) => {
-          if (error.response.status === 401) {
+          if (error.response?.status === 401) {
             localStorage.removeItem('accessToken');
           }
           return Promise.reject(error);

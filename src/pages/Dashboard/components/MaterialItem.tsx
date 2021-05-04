@@ -8,6 +8,7 @@ type Material = {
     description: string,
     createdAt?: string,
     video?: any,
+    document?: any,
 }
 
 const colorMap = {
@@ -18,9 +19,15 @@ const colorMap = {
 const MaterialItem = ({ material }: { material: Material }) => {
     const history = useHistory();
     let status: string = "Processing";
+    let type = "Video";
     if (material?.video?.jobCompleted === true) {
         status = "Ready to Edit"
     }
+    if (material?.document?.length > 0) {
+        type = "Document"
+        status = "Preview"
+    }
+
     return (
         <a onClick={() => history.push(`/material/${material.id}/${material.title}`, { material })} className="materialBox">
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -30,7 +37,7 @@ const MaterialItem = ({ material }: { material: Material }) => {
             </div>
             <div className="tags" style={{ justifyContent: "center", display: "flex" }}>
                 <span className="tag" style={{ backgroundColor: (colorMap as any)[status] }}>Status: <b>{status}</b></span>
-                <span className="tag type">Type: Video</span>
+                <span className="tag type">Type: {type}</span>
             </div>
         </a>
     );
