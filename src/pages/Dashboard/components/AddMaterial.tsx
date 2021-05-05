@@ -7,10 +7,11 @@ import API from "../../../axios";
 import { useForm, Controller } from "react-hook-form";
 // Toasts
 import { toast } from "react-toastify";
+import AddVector from "../../../assets/imgs/Plus.png";
 
 const modalStyle = {
     content: {
-        width: "500px",
+        width: "400px",
         top: '50%',
         transform: 'translate(-50%, -50%)',
         left: '50%',
@@ -65,7 +66,8 @@ const AddMaterial = ({ isOpen, setIsOpen, refreshMaterials }: { isOpen: boolean,
     }
     return (
         <Modal isOpen={isOpen} style={modalStyle} shouldCloseOnOverlayClick={true} onRequestClose={() => setIsOpen(false)}>
-            <h3>Add Material</h3>
+            <img src={AddVector} width={100} height={100} style={{ marginBottom: 10 }} />
+            <h3>New Material</h3>
             <div style={{ display: "flex", flexDirection: "column" }}>
                 <Controller
                     name="title"

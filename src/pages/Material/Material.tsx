@@ -88,7 +88,7 @@ const Material = () => {
                     {material !== null &&
                         <div className="materialTitle">
                             <div>
-                                <h3>{material.title} (Preview)</h3>
+                                <h3>{material.title}</h3>
                                 <p style={{ opacity: 0.5, paddingTop: "3px" }}>Algebra</p>
                             </div>
                             <p>Status: <b>Unpublished</b></p>

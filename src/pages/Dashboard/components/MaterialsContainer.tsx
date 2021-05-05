@@ -23,6 +23,7 @@ type Material = {
 
 const MaterialsContainer = () => {
   const [materials, setMaterials] = useState<Material[]>([]);
+  const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
 
@@ -34,7 +35,14 @@ const MaterialsContainer = () => {
       setMaterials(materialsRequest.data.data);
       setLoading(false);
     }
+    const fetchCourses = async () => {
+      const courses = await API.get("/users/courses");
+      console.log(courses.data.data);
+      setCourses(courses.data.data);
+      setLoading(false);
+    }
     fetchMaterials();
+    fetchCourses();
   }, [loading]);
 
   const refreshMaterials = () => {
@@ -59,20 +67,18 @@ const MaterialsContainer = () => {
         </div>
         :
         <div className="row">
-          <div className="materialsContainer col-4">
+          <div className="materialsContainer col-5">
             <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-              <h3>Courses</h3>
+              <h3>Recent Courses</h3>
               <Button variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
                 New Course
               </Button>
             </div>
-            <CourseItem name="Algebra" />
-            <CourseItem name="Computer Science" />
-            <CourseItem name="Math 5" />
+            {courses.map((course) => <CourseItem name={course.name} />)}
           </div>
-          <div className="materialsContainer col-8">
+          <div className="materialsContainer col-7">
             <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-              <h3>Materials</h3>
+              <h3>Recent Materials</h3>
               <Button variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
                 New Material
               </Button>
