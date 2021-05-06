@@ -60,12 +60,16 @@ const MaterialsContainer = () => {
     setCourses(courses.data.data);
   }
 
-  const refreshMaterials = () => {
-    fetchCourses();
+  const refreshMaterials = async () => {
+    setLoading(true);
+    await fetchCourses();
+    setLoading(false);
   }
 
-  const refreshCourses = () => {
-    fetchCourses();
+  const refreshCourses = async () => {
+    setLoading(true);
+    await fetchCourses();
+    setLoading(false);
   }
 
   // If container is loading
@@ -115,7 +119,7 @@ const MaterialsContainer = () => {
               </div>
 
             }
-            {(activeCourse ? courseMaterials : materials).reverse().map((material) => <MaterialItem material={material} />)}
+            {(activeCourse ? courseMaterials : materials).map((material) => <MaterialItem material={material} />)}
           </div>
         </div>
       }
