@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const axios = Axios.create({
-  baseURL: "http://unravel-backend.herokuapp.com",
+  baseURL: "https://unravel-backend.herokuapp.com",
   timeout: 20000,
 });
 

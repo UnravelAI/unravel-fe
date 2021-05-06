@@ -35,8 +35,8 @@ const MaterialsContainer = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      fetchMaterials();
-      fetchCourses();
+      await fetchMaterials();
+      await fetchCourses();
       setLoading(false);
     })();
   }, []);

@@ -18,7 +18,7 @@ export default function Header({ active }: { active: string }) {
               <a href="#">Courses</a>
               <a href="#">Enrolled Students</a>
               <a href="#">Published Materials</a>
-              <a href="#" style={{ color: "white", opacity: 1, backgroundColor: "#a85e5e", padding: "10px" }}>Logout</a>
+              <a href="#" style={{ color: "white", opacity: 1, backgroundColor: "#bf3434", padding: "10px 20px", borderRadius: 5 }}>Logout</a>
             </nav>
           </div>
         </div>
