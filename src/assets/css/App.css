@@ -214,6 +214,10 @@ footer .rights {
   box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.4);
 }
 
+.animated {
+  transition: transform .35s ease-in-out;
+}
+
 .materialDate {
   align-self: flex-start;
   background-color: #f3f3f3;

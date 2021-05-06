@@ -9,6 +9,7 @@ type Material = {
     createdAt?: string,
     video?: any,
     document?: any,
+    course?: any,
 }
 
 const colorMap = {
@@ -36,9 +37,9 @@ const MaterialItem = ({ material }: { material: Material }) => {
                         <i className="fa fa-clock" style={{ color: "#cfcfcf", marginRight: 5 }}></i>
                         {moment(material.createdAt).fromNow()}
                     </p>
-                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                    <div style={{ maxWidth: 250, display: "flex", flexDirection: "row", alignItems: "center" }}>
                         <h5>{material.title}</h5>
-                        <span className="type" style={{ alignSelf: "center", marginLeft: 10, padding: "5px", color: "#fff", borderRadius: 5 }}>Physics</span>
+                        {material.course && <span className="type" style={{ alignSelf: "center", marginLeft: 10, padding: "5px", color: "#fff", borderRadius: 5 }}>{material.course?.name}</span>}
                     </div>
                     <p style={{}}>{material.description}</p>
                 </div>

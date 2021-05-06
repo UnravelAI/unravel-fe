@@ -19,6 +19,7 @@ type Material = {
     description: string,
     video: any,
     document?: any,
+    course?: any,
 }
 
 const Material = () => {
@@ -88,9 +89,8 @@ const Material = () => {
                         <div className="materialTitle">
                             <div>
                                 <h3>{material.title}</h3>
-                                <p style={{ opacity: 0.5, paddingTop: "3px" }}>Algebra</p>
+                                <p style={{ opacity: 0.5, paddingTop: "3px" }}>{material.description}</p>
                             </div>
-                            <p>Status: <b>Unpublished</b></p>
                         </div>
                     }
                     {material?.document.length > 0 || !loading && material?.video !== null && material?.video?.status === "editable" ?

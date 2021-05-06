@@ -20,10 +20,12 @@ type Material = {
   title: string,
   description: string,
   video?: any,
+  course?: any,
 }
 
 const MaterialsContainer = () => {
   const [materials, setMaterials] = useState<Material[]>([]);
+  const [courseMaterials, setCourseMaterials] = useState<Material[]>([]);
   const [courses, setCourses] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
@@ -38,6 +40,13 @@ const MaterialsContainer = () => {
       setLoading(false);
     })();
   }, []);
+
+  useEffect(() => {
+    if (!activeCourse) return;
+    setCourseMaterials(
+      materials.filter((material) => material?.course?.id === activeCourse)
+    );
+  }, [activeCourse]);
 
   const fetchMaterials = async () => {
     const materialsRequest = await API.get("/users/materials");
@@ -68,6 +77,13 @@ const MaterialsContainer = () => {
     );
   }
 
+  const toggleActiveCourse = (courseID: number) => {
+    if (activeCourse === courseID) {
+      return setActiveCourse(null);
+    }
+    setActiveCourse(courseID);
+  }
+
   return (
     <div className="container">
       {materials.length === 0 ?
@@ -81,22 +97,25 @@ const MaterialsContainer = () => {
         :
         <div className="row">
           <div className="materialsContainer col-5">
-            <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+            <div className="animated" style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
               <h3>Recent Courses</h3>
               <Button variant="contained" color="primary" onClick={() => setShowCourseModal(true)}>
                 New Course
               </Button>
             </div>
-            {courses.map((course) => <CourseItem setActive={() => setActiveCourse((activeCourse) => activeCourse === null ? course.id : null)} active={course.id === activeCourse ? true : false} name={course.name} materialsLength={3} />)}
+            {(courses).map((course) => <CourseItem setActive={() => toggleActiveCourse(course.id)} active={course.id === activeCourse ? true : false} name={course.name} materialsLength={course.materials} />)}
           </div>
           <div className="materialsContainer col-7">
-            <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-              <h3>Recent Materials</h3>
-              <Button variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
-                New Material
+            {!activeCourse &&
+              <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                <h3>Recent Materials</h3>
+                <Button variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
+                  New Material
               </Button>
-            </div>
-            {materials.reverse().map((material) => <MaterialItem material={material} />)}
+              </div>
+
+            }
+            {(activeCourse ? courseMaterials : materials).reverse().map((material) => <MaterialItem material={material} />)}
           </div>
         </div>
       }
