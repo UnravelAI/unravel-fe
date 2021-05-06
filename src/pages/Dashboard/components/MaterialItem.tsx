@@ -24,17 +24,23 @@ const MaterialItem = ({ material }: { material: Material }) => {
         status = "Editable"
     }
     if (material?.document?.length > 0) {
-        status = "Preview"
+        status = "Editable"
     }
 
     return (
-        <a onClick={() => history.push(`/material/${material.id}/${material.title}`, { material })} className="materialBox">
+        <a onClick={() => history.push(`/material/${material.id}`, { material })} className="materialBox">
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                 <i className="fa fa-folder" style={{ color: "#ebebeb", fontSize: 30, marginRight: 25 }}></i>
                 <div style={{ display: "flex", flexDirection: "column" }}>
-                    <p className="materialDate">{moment(material.createdAt).fromNow()}</p>
-                    <h5>{material.title}</h5>
-                    <p>{material.description}</p>
+                    <p className="materialDate">
+                        <i className="fa fa-clock" style={{ color: "#cfcfcf", marginRight: 5 }}></i>
+                        {moment(material.createdAt).fromNow()}
+                    </p>
+                    <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                        <h5>{material.title}</h5>
+                        <span className="type" style={{ alignSelf: "center", marginLeft: 10, padding: "5px", color: "#fff", borderRadius: 5 }}>Physics</span>
+                    </div>
+                    <p style={{}}>{material.description}</p>
                 </div>
             </div>
             <div className="tags" style={{ justifyContent: "center", display: "flex", alignItems: "center" }}>

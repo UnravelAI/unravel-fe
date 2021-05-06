@@ -49,7 +49,7 @@ const Router = () => {
               <Route path="/dashboard">
                 <Dashboard isLoggedIn={isLoggedIn} />
               </Route>
-              <Route path="/material/:id/:title">
+              <Route path="/material/:id">
                 <Material />
               </Route>
             </div>

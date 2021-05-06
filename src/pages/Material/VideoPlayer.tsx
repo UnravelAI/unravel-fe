@@ -101,7 +101,7 @@ const VideoPlayer = ({ material, streamingURL }: { material: any, streamingURL: 
                         }
                     })}
                 </p>
-                <div style={{ alignSelf: "center" }}>
+                <div style={{ alignSelf: "flex-end" }}>
                     <Button variant="contained" color="inherit" style={{ backgroundColor: "#3e9681", color: "#fff", padding: "20px 30px", marginTop: "20px" }}>
                         Publish Video
                     </Button>

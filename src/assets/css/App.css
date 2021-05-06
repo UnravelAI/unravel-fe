@@ -218,9 +218,9 @@ footer .rights {
   align-self: flex-start;
   background-color: #f3f3f3;
   color: white;
-  margin-bottom: 5px;
   padding: 5px;
   border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .materialBox h5 {
@@ -231,7 +231,7 @@ footer .rights {
   color: #ababab;
 }
 
-.materialBox .tag {
+.tag {
   color: white;
   background-color: #3e9681;
   align-self: center;

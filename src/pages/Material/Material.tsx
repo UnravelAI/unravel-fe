@@ -79,7 +79,6 @@ const Material = () => {
             console.log(error.response);
         }
     }
-    console.log(material?.document.length);
     return (
         <>
             <DashboardHeader active="Dashboard" />
