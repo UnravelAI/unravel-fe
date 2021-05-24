@@ -25,20 +25,21 @@ html {
   padding-top: 80px;
   background: url("../imgs/HeaderBG.png");
   height: 200px;
+  padding-bottom: 20px;
   display: flex;
   flex: 0 0 60px;
 }
 
 .mini-header {
   padding-top: 30px;
-  padding-bottom: 30px;
+  padding-bottom: 50px;
   background: url("../imgs/HeaderBG.png");
   display: flex;
   flex: 0 0 60px;
 }
 
 .toparea.extended {
-  height: 580px;
+  min-height: 580px !important;
 }
 
 .header {
@@ -188,9 +189,9 @@ footer .rights {
   justify-content: space-between;
   transition: 0.4s;
   cursor: pointer;
-  -webkit-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
-  -moz-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
-  box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.1);
 }
 
 .materialBox {
@@ -203,19 +204,20 @@ footer .rights {
   justify-content: space-between;
   transition: 0.4s;
   cursor: pointer;
-  -webkit-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
-  -moz-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
-  box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.1);
+  -webkit-box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.1);
 }
 
-.materialBox:hover, .courseBox:hover {
-  -webkit-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.4);
-  -moz-box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.4);
-  box-shadow: 4px 2px 42px -15px rgba(0,0,0,0.4);
+.materialBox:hover,
+.courseBox:hover {
+  -webkit-box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 2px 42px -15px rgba(0, 0, 0, 0.4);
 }
 
 .animated {
-  transition: transform .35s ease-in-out;
+  transition: transform 0.35s ease-in-out;
 }
 
 .materialDate {
@@ -228,7 +230,7 @@ footer .rights {
 }
 
 .materialBox h5 {
-  color: #252a42
+  color: #252a42;
 }
 
 .materialBox p {
@@ -260,7 +262,7 @@ footer .rights {
   flex-direction: row;
 }
 
-.inputfile + label{
+.inputfile + label {
   background-color: #121212;
   border-radius: 50px;
   padding: 25px 35px;
@@ -273,12 +275,12 @@ footer .rights {
 }
 
 .inputfile {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
 .page {
@@ -317,7 +319,7 @@ footer .rights {
 }
 
 .word:hover {
-  background-color: #A85E5E;
+  background-color: #a85e5e;
   color: white;
 }
 
@@ -340,12 +342,6 @@ footer .rights {
 
 .removed {
   text-decoration: line-through;
-  background-color: #A85E5E;
+  background-color: #a85e5e;
   color: white;
 }
-
-
-
-
-
-

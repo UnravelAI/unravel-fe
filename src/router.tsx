@@ -1,11 +1,8 @@
 import React, { useState, useEffect, Suspense } from "react";
-import {
-  BrowserRouter,
-  Switch,
-  Route
-} from "react-router-dom";
+import { Router, Route, Switch, BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import history from "./history";
 
 // Pages
 const Home = React.lazy(() => import("./pages/Homepage"));
@@ -14,17 +11,11 @@ const Login = React.lazy(() => import("./pages/Login"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
 const Material = React.lazy(() => import("./pages/Material"));
 
-const PrivateRoute = ({ ...rest }) => {
-  return (
-    <Route {...rest} />
-  );
-}
-
-const Router = () => {
+const RootRouter = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       setIsLoggedIn(true);
     }
@@ -33,10 +24,10 @@ const Router = () => {
   return (
     <>
       <BrowserRouter>
-        <Switch>
-          <Suspense fallback={<div>Loading</div>}>
-            <div className="wrapper">
-              <ToastContainer />
+        <Suspense fallback={<div>Loading</div>}>
+          <div className="wrapper">
+            <ToastContainer />
+            <Switch>
               <Route path="/" exact>
                 <Home isLoggedIn={isLoggedIn} />
               </Route>
@@ -44,7 +35,7 @@ const Router = () => {
                 <Register />
               </Route>
               <Route path="/login">
-                <Login />
+                <Login setIsLoggedIn={setIsLoggedIn} />
               </Route>
               <Route path="/dashboard">
                 <Dashboard isLoggedIn={isLoggedIn} />
@@ -52,12 +43,12 @@ const Router = () => {
               <Route path="/material/:id">
                 <Material />
               </Route>
-            </div>
-          </Suspense>
-        </Switch>
+            </Switch>
+          </div>
+        </Suspense>
       </BrowserRouter>
     </>
   );
-}
+};
 
-export default Router;
+export default RootRouter;
