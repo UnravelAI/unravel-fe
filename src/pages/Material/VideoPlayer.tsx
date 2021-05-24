@@ -112,11 +112,11 @@ const VideoPlayer = ({
   // publish video
   const publish = async () => {
     try {
+      console.log(intervals);
       await API.put("/cloud/video/edit", {
         fileName: material.video.fileName,
         intervals: intervals,
       });
-      console.log("PUBLISHED");
     } catch (error) {
       console.log(error);
     }
