@@ -39,6 +39,7 @@ const VideoPlayer = ({
   );
   const [intervals, setIntervals] = useState<Interval[]>([]);
   const transcription = useMemo(() => {
+    if (material.video.status === "published") return;
     const transcribed = material.video.transcription.results.items.map(
       (word: any, index: number) => {
         if (!word.start_time && !word.end_time) {
@@ -123,6 +124,7 @@ const VideoPlayer = ({
   };
 
   useEffect(() => {
+    if (material.video.status === "published") return;
     if (removedDurations.length === 0) return;
     const sorted = removedDurations.sort(
       (duration1: RemovedDuration, duration2: RemovedDuration) =>
@@ -149,14 +151,16 @@ const VideoPlayer = ({
       const duration = sorted[i];
       const nextDuration = sorted[i + 1];
       const end = duration.startTime + duration.duration;
-      intervals.push({
-        start: end,
-        end: nextDuration.startTime,
-      });
+
+      if (nextDuration.startTime - end > 0.05) {
+        intervals.push({
+          start: end,
+          end: nextDuration.startTime,
+        });
+      }
 
       // if last item
       if (i === sorted.length - 2) {
-        console.log("hello");
         intervals.push({
           start: nextDuration.startTime + nextDuration.duration,
           end: transcriptionEnd,
@@ -169,6 +173,7 @@ const VideoPlayer = ({
         end: transcriptionEnd,
       });
     }
+    console.log(intervals);
     setIntervals(intervals);
   }, [removedDurations]);
 
@@ -182,51 +187,53 @@ const VideoPlayer = ({
         width="100%"
         height="auto"
       />
-      <div className="transcriptionArea">
-        <p>
-          {transcription.map((word: any, index: any) => {
-            let className = "word";
-            if (currentPosition > Number(word.start_time)) {
-              className += " highlightedWord";
-            } else {
-              className += " nonHighlightedWord";
-            }
-            if (removedIndices.includes(index)) {
-              className += " removed";
-            }
-            return (
-              <a
-                className={className}
-                onClick={() =>
-                  toggleRemoveWord(
-                    index,
-                    Number(word.start_time),
-                    Number(word.end_time) - Number(word.start_time)
-                  )
-                }
-              >
-                {" "}
-                {word.alternatives[0].content}
-              </a>
-            );
-          })}
-        </p>
-        <div style={{ alignSelf: "flex-end" }}>
-          <Button
-            onClick={() => publish()}
-            variant="contained"
-            color="inherit"
-            style={{
-              backgroundColor: "#3e9681",
-              color: "#fff",
-              padding: "20px 30px",
-              marginTop: "20px",
-            }}
-          >
-            Publish Video
-          </Button>
+      {material.video.status === "editable" && (
+        <div className="transcriptionArea">
+          <p>
+            {transcription.map((word: any, index: any) => {
+              let className = "word";
+              if (currentPosition > Number(word.start_time)) {
+                className += " highlightedWord";
+              } else {
+                className += " nonHighlightedWord";
+              }
+              if (removedIndices.includes(index)) {
+                className += " removed";
+              }
+              return (
+                <a
+                  className={className}
+                  onClick={() =>
+                    toggleRemoveWord(
+                      index,
+                      Number(word.start_time),
+                      Number(word.end_time) - Number(word.start_time)
+                    )
+                  }
+                >
+                  {" "}
+                  {word.alternatives[0].content}
+                </a>
+              );
+            })}
+          </p>
+          <div style={{ alignSelf: "flex-end" }}>
+            <Button
+              onClick={() => publish()}
+              variant="contained"
+              color="inherit"
+              style={{
+                backgroundColor: "#3e9681",
+                color: "#fff",
+                padding: "20px 30px",
+                marginTop: "20px",
+              }}
+            >
+              Publish Video
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

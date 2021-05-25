@@ -2,7 +2,7 @@ import Axios from "axios";
 
 const axios = Axios.create({
   baseURL: "https://unravel-backend.herokuapp.com",
-  timeout: 20000,
+  timeout: 999999999,
 });
 
 const AuthInterceptor = () => {
@@ -23,15 +23,16 @@ const AuthInterceptor = () => {
         },
         (error) => {
           return Promise.reject(error);
-        },
+        }
       );
       // Handle 401 by clearning the access token
       responseInterceptor = axios.interceptors.response.use(
         async (config) => {
           return config;
-        }, (error) => {
+        },
+        (error) => {
           if (error.response?.status === 401) {
-            localStorage.removeItem('accessToken');
+            localStorage.removeItem("accessToken");
           }
           return Promise.reject(error);
         }
