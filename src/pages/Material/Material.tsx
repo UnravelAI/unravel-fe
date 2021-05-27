@@ -115,9 +115,14 @@ const Material = () => {
                 <div style={{ alignSelf: "center" }}>
                   <ReactLoading color="#fff" className="loadingIcon" />
                 </div>
-              ) : processing || material?.video?.status === "processing" ? (
+              ) : processing ||
+                material?.video?.status === "processing" ||
+                material?.video?.status === "editing" ? (
                 <h6 className="processing">
-                  This video is currently being processed
+                  This video is currently being{" "}
+                  {material?.video?.status === "processing"
+                    ? "Processed"
+                    : "Edited"}
                 </h6>
               ) : (
                 <>

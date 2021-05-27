@@ -37,7 +37,9 @@ const VideoPlayer = ({
   const [removedDurations, setRemovedDurations] = useState<RemovedDuration[]>(
     []
   );
+  const [word, setWord] = useState<string>("");
   const [intervals, setIntervals] = useState<Interval[]>([]);
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
   const transcription = useMemo(() => {
     if (material.video.status === "published") return;
     const transcribed = material.video.transcription.results.items.map(
@@ -72,8 +74,12 @@ const VideoPlayer = ({
   const toggleRemoveWord = (
     index: number,
     startTime: number,
-    duration: number
+    duration: number,
+    toggle: boolean
   ) => {
+    if (!toggle && removedIndices.indexOf(index) !== -1) {
+      return;
+    }
     setRemovedIndices((removedIndices) => {
       const newIndices = [...removedIndices];
       // if it already exists
@@ -108,7 +114,31 @@ const VideoPlayer = ({
           currentPosition + seekedDuration;
       }
     });
+
+    const elements = document.querySelectorAll(".highlightedWord");
+    const element = elements[elements.length - 1];
+    if (element) {
+      setWord((word: string) => {
+        if (element.innerHTML !== word) {
+          return element.innerHTML;
+        }
+        return word;
+      });
+    }
   }, [currentPosition]);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll(".highlightedWord");
+    const element = elements[elements.length - 1];
+    const elementPosition =
+      element?.getBoundingClientRect()?.top + window.pageYOffset - 700;
+    if (elementPosition) {
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth",
+      });
+    }
+  }, [word]);
 
   // publish video
   const publish = async () => {
@@ -185,7 +215,13 @@ const VideoPlayer = ({
         playerRef={playerRef}
         controls={true}
         width="100%"
-        height="auto"
+        height="500"
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 9999,
+          backgroundColor: "#2d2d2d",
+        }}
       />
       {material.video.status === "editable" && (
         <div className="transcriptionArea">
@@ -203,13 +239,23 @@ const VideoPlayer = ({
               return (
                 <a
                   className={className}
-                  onClick={() =>
+                  onMouseEnter={(e) => {
+                    if (e.buttons == 1)
+                      toggleRemoveWord(
+                        index,
+                        Number(word.start_time),
+                        Number(word.end_time) - Number(word.start_time),
+                        false
+                      );
+                  }}
+                  onMouseDown={() => {
                     toggleRemoveWord(
                       index,
                       Number(word.start_time),
-                      Number(word.end_time) - Number(word.start_time)
-                    )
-                  }
+                      Number(word.end_time) - Number(word.start_time),
+                      true
+                    );
+                  }}
                 >
                   {" "}
                   {word.alternatives[0].content}
