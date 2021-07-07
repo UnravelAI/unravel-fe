@@ -55,7 +55,7 @@ const MaterialItem = ({ material }: { material: Material }) => {
           </p>
           <div
             style={{
-              maxWidth: 250,
+              maxWidth: 400,
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
@@ -94,10 +94,12 @@ const MaterialItem = ({ material }: { material: Material }) => {
         >
           <b>{status}</b>
         </span>
-        <div className="tag" style={{ backgroundColor: "#f4f4f4" }}>
-          <i className="fa fa-eye" style={{ color: "#cdcdcd" }}></i>
-          <span style={{ paddingLeft: 7, color: "#cdcdcd" }}>0</span>
-        </div>
+        {status === "Published" && (
+          <div className="tag" style={{ backgroundColor: "#f4f4f4" }}>
+            <i className="fa fa-eye" style={{ color: "#cdcdcd" }}></i>
+            <span style={{ paddingLeft: 7, color: "#cdcdcd" }}>0</span>
+          </div>
+        )}
       </div>
     </a>
   );

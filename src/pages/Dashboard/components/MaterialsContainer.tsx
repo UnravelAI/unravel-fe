@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import EmptyProjectsVector from "../../../assets/imgs/emptyProjects.png";
 // Components
 import MaterialItem from "./MaterialItem";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 import CourseItem from "./CourseItem";
 // UI
 import { Button } from "@material-ui/core";
@@ -14,14 +14,14 @@ import AddCourse from "./AddCourse";
 import API from "../../../axios";
 
 type Material = {
-  id?: number,
-  updatedAt?: string,
-  createdAt?: string,
-  title: string,
-  description: string,
-  video?: any,
-  course?: any,
-}
+  id?: number;
+  updatedAt?: string;
+  createdAt?: string;
+  title: string;
+  description: string;
+  video?: any;
+  course?: any;
+};
 
 const MaterialsContainer = () => {
   const [materials, setMaterials] = useState<Material[]>([]);
@@ -52,25 +52,25 @@ const MaterialsContainer = () => {
     const materialsRequest = await API.get("/users/materials");
     console.log(materialsRequest.data.data);
     setMaterials(materialsRequest.data.data);
-  }
+  };
 
   const fetchCourses = async () => {
     const courses = await API.get("/users/courses");
     console.log(courses.data.data);
     setCourses(courses.data.data);
-  }
+  };
 
   const refreshMaterials = async () => {
     setLoading(true);
     await fetchCourses();
     setLoading(false);
-  }
+  };
 
   const refreshCourses = async () => {
     setLoading(true);
     await fetchCourses();
     setLoading(false);
-  }
+  };
 
   // If container is loading
   if (loading) {
@@ -86,47 +86,96 @@ const MaterialsContainer = () => {
       return setActiveCourse(null);
     }
     setActiveCourse(courseID);
-  }
+  };
 
   return (
     <div className="container">
-      {materials.length === 0 ?
+      {materials.length === 0 ? (
         <div style={{ textAlign: "center" }}>
           <img src={EmptyProjectsVector} alt="You don't have any materials" />
-          <h4 style={{ marginTop: "25px", color: "#a6a6a6" }}>You don't have any materials yet!</h4>
-          <Button style={{ marginTop: 15 }} variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
+          <h4 style={{ marginTop: "25px", color: "#a6a6a6" }}>
+            You don't have any materials yet!
+          </h4>
+          <Button
+            style={{ marginTop: 15 }}
+            variant="contained"
+            color="primary"
+            onClick={() => setShowAddModal(true)}
+          >
             New Material
           </Button>
         </div>
-        :
+      ) : (
         <div className="row">
-          <div className="materialsContainer col-5">
-            <div className="animated" style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <div className="materialsContainer col-4">
+            <div
+              className="animated"
+              style={{
+                marginBottom: 25,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <h3>Recent Courses</h3>
-              <Button variant="contained" color="primary" onClick={() => setShowCourseModal(true)}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setShowCourseModal(true)}
+              >
                 New Course
               </Button>
             </div>
-            {(courses).map((course) => <CourseItem setActive={() => toggleActiveCourse(course.id)} active={course.id === activeCourse ? true : false} name={course.name} materialsLength={course.materials} />)}
+            {courses.map((course) => (
+              <CourseItem
+                setActive={() => toggleActiveCourse(course.id)}
+                active={course.id === activeCourse ? true : false}
+                name={course.name}
+                materialsLength={course.materials}
+              />
+            ))}
           </div>
-          <div className="materialsContainer col-7">
-            {!activeCourse &&
-              <div style={{ marginBottom: 25, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <div className="materialsContainer col-8">
+            {!activeCourse && (
+              <div
+                style={{
+                  marginBottom: 25,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
                 <h3>Recent Materials</h3>
-                <Button variant="contained" color="primary" onClick={() => setShowAddModal(true)}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setShowAddModal(true)}
+                >
                   New Material
-              </Button>
+                </Button>
               </div>
-
-            }
-            {(activeCourse ? courseMaterials : materials).map((material) => <MaterialItem material={material} />)}
+            )}
+            {(activeCourse ? courseMaterials : materials).map((material) => (
+              <MaterialItem material={material} />
+            ))}
           </div>
         </div>
-      }
-      <AddMaterial courses={courses} refreshMaterials={refreshMaterials} isOpen={showAddModal} setIsOpen={setShowAddModal} />
-      <AddCourse refreshCourses={refreshCourses} isOpen={showCourseModal} setIsOpen={setShowCourseModal} />
+      )}
+      <AddMaterial
+        courses={courses}
+        refreshMaterials={refreshMaterials}
+        isOpen={showAddModal}
+        setIsOpen={setShowAddModal}
+      />
+      <AddCourse
+        refreshCourses={refreshCourses}
+        isOpen={showCourseModal}
+        setIsOpen={setShowCourseModal}
+      />
     </div>
   );
-}
+};
 
 export default MaterialsContainer;

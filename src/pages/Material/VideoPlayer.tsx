@@ -228,6 +228,7 @@ const VideoPlayer = ({
           <p>
             {transcription.map((word: any, index: any) => {
               let className = "word";
+              let text = word.alternatives[0].content;
               if (currentPosition > Number(word.start_time)) {
                 className += " highlightedWord";
               } else {
@@ -235,6 +236,10 @@ const VideoPlayer = ({
               }
               if (removedIndices.includes(index)) {
                 className += " removed";
+              }
+              if (text === "." || text === ",") {
+                className += " silence";
+                text = "SILENCE";
               }
               return (
                 <a
@@ -258,7 +263,7 @@ const VideoPlayer = ({
                   }}
                 >
                   {" "}
-                  {word.alternatives[0].content}
+                  {text}
                 </a>
               );
             })}

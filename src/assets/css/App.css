@@ -7,6 +7,10 @@ body {
   flex-direction: column;
 }
 
+.container {
+  max-width: 1500px;
+}
+
 html {
   height: 100%;
 }
@@ -30,12 +34,23 @@ html {
   flex: 0 0 60px;
 }
 
+.silence {
+  background-color: #fcfbed;
+  color: #dbd9bf;
+}
+
 .mini-header {
-  padding-top: 30px;
-  padding-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 15px;
   background: url("../imgs/HeaderBG.png");
   display: flex;
-  flex: 0 0 60px;
+  position: sticky;
+  top: 0;
+  z-index: 9999999999;
+}
+
+.mini-header nav a {
+  font-size: 18px !important;
 }
 
 .toparea.extended {
@@ -181,7 +196,7 @@ footer .rights {
 .courseBox {
   background-color: #fff;
   padding: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
   align-items: center;
   border-radius: 5px;
   display: flex;
@@ -197,7 +212,7 @@ footer .rights {
 .materialBox {
   background-color: #fff;
   padding: 40px;
-  margin-top: 10px;
+  margin-top: 20px;
   border-radius: 5px;
   display: flex;
   flex-direction: row;
