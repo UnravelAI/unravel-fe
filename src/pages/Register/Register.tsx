@@ -24,6 +24,7 @@ const Register = () => {
   const onSubmit = async (data: any) => {
     try {
       delete data.passwordConfirmation;
+      data.isTeacher = data.isTeacher === "false" ? false : true;
       await API.post("/users", data);
       history.push("/login");
       toast.success('You have succesfully registered!', {
@@ -35,7 +36,6 @@ const Register = () => {
         draggable: false,
         progress: undefined,
         });
-
     } catch (error) {
       toast.error('An error occured while registeration!', {
         position: "top-right",
@@ -140,22 +140,38 @@ const Register = () => {
                     )}
                   />
                 </div>
-                <div className="input gender">
-                  <label>Gender</label>
-                  <Controller 
-                    name="gender"
-                    rules={{
-                      required: "Gender cannot be empty",
-                    }}
-                    control={control}
-                    defaultValue=""
-                    render={({onChange, value}) => (
-                      <RadioGroup aria-label="gender" name="gender1" value={value} onChange={onChange}>
-                        <FormControlLabel value="female" control={<Radio />} label="Female" />
-                        <FormControlLabel value="male" control={<Radio />} label="Male" />
-                      </RadioGroup>
-                    )}
-                  />
+                <div style={{ display: 'flex', flexDirection: "row" }}>
+                  <div className="input gender">
+                    <label>Gender</label>
+                    <Controller 
+                      name="gender"
+                      control={control}
+                      defaultValue=""
+                      render={({onChange, value}) => (
+                        <RadioGroup aria-label="gender" name="gender1" value={value} onChange={onChange}>
+                          <FormControlLabel value="female" control={<Radio />} label="Female" />
+                          <FormControlLabel value="male" control={<Radio />} label="Male" />
+                        </RadioGroup>
+                      )}
+                    />
+                  </div>
+                  <div className="input" style={{ marginLeft: 50 }}>
+                    <label>You are?</label>
+                    <Controller 
+                      name="isTeacher"
+                      rules={{
+                        required: "Account type must not be empty",
+                      }}
+                      control={control}
+                      render={({onChange, value}) => (
+                        <RadioGroup aria-label="isTeacher" name="isTeacher" value={value} onChange={onChange}>
+                          <FormControlLabel value="true" control={<Radio />} label="Teacher" />
+                          <FormControlLabel value="false" control={<Radio />} label="Student" />
+                          <p style={{ color: "#f44336" }}>{errors?.isTeacher?.message}</p>
+                        </RadioGroup>
+                      )}
+                    />
+                  </div>
                 </div>
                 <Button variant="contained" color="primary" style={{ marginTop: "15px" }} onClick={handleSubmit(onSubmit)}>
                   Submit
