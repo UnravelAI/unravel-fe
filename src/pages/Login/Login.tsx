@@ -38,6 +38,9 @@ const Login = ({ setIsLoggedIn }: { setIsLoggedIn: any }) => {
         progress: undefined,
       });
       setIsLoggedIn(true);
+      if (!user.data.isTeacher) {
+        return history.push("/student/dashboard/");
+      }
       history.push("/dashboard/");
     } catch (error) {
       toast.error("Invalid Credentials!", {

@@ -9,6 +9,7 @@ const Home = React.lazy(() => import("./pages/Homepage"));
 const Register = React.lazy(() => import("./pages/Register"));
 const Login = React.lazy(() => import("./pages/Login"));
 const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const StudentDashboard = React.lazy(() => import("./pages/Dashboard/StudentDashboard"));
 const Material = React.lazy(() => import("./pages/Material"));
 
 const RootRouter = () => {
@@ -36,6 +37,9 @@ const RootRouter = () => {
               </Route>
               <Route path="/login">
                 <Login setIsLoggedIn={setIsLoggedIn} />
+              </Route>
+              <Route path="/student/dashboard">
+                <StudentDashboard isLoggedIn={isLoggedIn} />
               </Route>
               <Route path="/dashboard">
                 <Dashboard isLoggedIn={isLoggedIn} />
