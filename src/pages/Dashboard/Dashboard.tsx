@@ -3,6 +3,7 @@ import React from "react";
 import DashboardHeader from "../../core/components/DashboardHeader";
 import Footer from "../../core/components/Footer";
 import MaterialsContainer from "./components/MaterialsContainer";
+import WelcomeMessage from "./components/WelcomeMessage";
 import { Redirect } from "react-router-dom";
 
 const Dashboard = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
@@ -12,6 +13,7 @@ const Dashboard = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <>
       <DashboardHeader active="Dashboard" />
+      <WelcomeMessage />
       <div className="page">
         <MaterialsContainer />
       </div>

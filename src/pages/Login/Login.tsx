@@ -29,6 +29,7 @@ const Login = ({ setIsLoggedIn }: { setIsLoggedIn: any }) => {
       console.log(user);
       localStorage.setItem("accessToken", user.data.accessToken);
       localStorage.setItem("isTeacher", user.data.data.isTeacher);
+      localStorage.setItem("firstName", user.data.data.firstName);
       authInterceptor.activate();
       toast.success("You have been logged in succesfully!", {
         position: "top-right",
