@@ -26,7 +26,9 @@ const Login = ({ setIsLoggedIn }: { setIsLoggedIn: any }) => {
   const onSubmit = async (data: any) => {
     try {
       const user = await API.post("/login", data);
+      console.log(user);
       localStorage.setItem("accessToken", user.data.accessToken);
+      localStorage.setItem("isTeacher", user.data.data.isTeacher);
       authInterceptor.activate();
       toast.success("You have been logged in succesfully!", {
         position: "top-right",
@@ -38,7 +40,7 @@ const Login = ({ setIsLoggedIn }: { setIsLoggedIn: any }) => {
         progress: undefined,
       });
       setIsLoggedIn(true);
-      if (!user.data.isTeacher) {
+      if (!user.data.data.isTeacher) {
         return history.push("/student/dashboard/");
       }
       history.push("/dashboard/");

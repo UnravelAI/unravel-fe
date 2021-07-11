@@ -35,40 +35,39 @@ const StudentMaterialsContainer = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      await fetchMaterials();
-      await fetchCourses();
+      await fetchEnrolledCourses();
       setLoading(false);
     })();
   }, []);
 
   useEffect(() => {
-    if (!activeCourse) return;
-    setCourseMaterials(
-      materials.filter((material) => material?.course?.id === activeCourse)
-    );
+    if (activeCourse === null) return;
+    fetchMaterials(activeCourse);
   }, [activeCourse]);
 
-  const fetchMaterials = async () => {
-    const materialsRequest = await API.get("/users/materials");
+  const fetchMaterials = async (courseID: number) => {
+    const materialsRequest = await API.get(`/student/course/${courseID}/materials`);
     console.log(materialsRequest.data.data);
     setMaterials(materialsRequest.data.data);
   };
 
-  const fetchCourses = async () => {
-    const courses = await API.get("/users/courses");
+  const fetchEnrolledCourses = async () => {
+    const courses = await API.get("/student/courses");
     console.log(courses.data.data);
     setCourses(courses.data.data);
+    if (courses.data.data.length === 0) return; 
+    setActiveCourse(courses.data.data[0].id);
   };
 
   const refreshMaterials = async () => {
     setLoading(true);
-    await fetchCourses();
+    await fetchEnrolledCourses();
     setLoading(false);
   };
 
   const refreshCourses = async () => {
     setLoading(true);
-    await fetchCourses();
+    await fetchEnrolledCourses();
     setLoading(false);
   };
 
@@ -90,7 +89,7 @@ const StudentMaterialsContainer = () => {
 
   return (
     <div className="container">
-      {materials.length === 0 ? (
+      {courses.length === 0 ? (
         <div style={{ textAlign: "center" }}>
           <img src={EmptyProjectsVector} alt="You don't have any materials" />
           <h4 style={{ marginTop: "25px", color: "#a6a6a6" }}>
@@ -118,17 +117,18 @@ const StudentMaterialsContainer = () => {
                 justifyContent: "space-between",
               }}
             >
-              <h3>Recent Courses</h3>
+              <h3>Your Courses</h3>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => setShowCourseModal(true)}
+                onClick={() => setShowJoinModal(true)}
               >
                 Join Course
               </Button>
             </div>
             {courses.map((course) => (
               <CourseItem
+                noMaterialsCount
                 setActive={() => toggleActiveCourse(course.id)}
                 active={course.id === activeCourse ? true : false}
                 name={course.name}
@@ -137,7 +137,7 @@ const StudentMaterialsContainer = () => {
             ))}
           </div>
           <div className="StudentMaterialsContainer col-8">
-            {!activeCourse && (
+            {activeCourse !== null && (
               <div
                 style={{
                   marginBottom: 25,
@@ -147,12 +147,18 @@ const StudentMaterialsContainer = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <h3>Recent Materials</h3>
+                <h3>Latest Materials</h3>
               </div>
             )}
-            {(activeCourse ? courseMaterials : materials).map((material) => (
-              <MaterialItem material={material} />
+            {activeCourse !== null && materials.map((material, index) => (
+              <MaterialItem key={index} material={material} />
             ))}
+            {materials.length === 0 && (
+            <div style={{ backgroundColor: "#e1eafc", padding: 15, borderRadius: 5 }}>
+              <p>You don't have any materials in this course yet.</p>
+            </div>
+            )
+            }
           </div>
         </div>
       )}

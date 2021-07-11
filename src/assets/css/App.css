@@ -46,7 +46,7 @@ html {
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 9999999999;
+  z-index: 5;
 }
 
 .mini-header nav a {

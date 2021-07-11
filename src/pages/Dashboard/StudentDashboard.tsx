@@ -1,6 +1,6 @@
 import React from "react";
 // Page components
-import DashboardHeader from "../../core/components/DashboardHeader";
+import StudentHeader from "../../core/components/StudentHeader";
 import Footer from "../../core/components/Footer";
 import StudentMaterialsContainer from "./components/StudentMaterialsContainer";
 import { Redirect } from "react-router-dom";
@@ -11,7 +11,7 @@ const StudentDashboard = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   }
   return (
     <>
-      <DashboardHeader active="Dashboard" />
+      <StudentHeader active="Dashboard" />
       <div className="page">
         <StudentMaterialsContainer />
       </div>

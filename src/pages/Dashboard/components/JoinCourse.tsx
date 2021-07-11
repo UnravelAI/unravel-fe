@@ -54,16 +54,12 @@ const JoinCourse = ({
   const { control, handleSubmit, errors } = useForm({
     mode: "onChange",
   });
-  const onClick = async (data: Material) => {
+  const onClick = async (data: any) => {
     try {
-      if (data.course === 0) {
-        await API.post("/users/materials", data);
-      } else {
-        await API.post(`/users/courses/${data.course}/materials`, data);
-      }
+      await API.post(`/student/enroll/${data.code}`);
       setIsOpen(false);
       refreshMaterials();
-      toast.success("Material has been added succesfully", {
+      toast.success("You've joined the course!", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -101,63 +97,20 @@ const JoinCourse = ({
         <h3 style={{ color: "white" }}>Join Course</h3>
       </div>
       <div style={{ display: "flex", flexDirection: "column", padding: 30 }}>
+        <p>Please enter the code of the course</p>
         <Controller
-          name="course"
-          control={control}
-          defaultValue={0}
-          render={({ onChange, value }) => (
-            <div style={{ display: "flex", flex: 1, flexDirection: "column" }}>
-              <InputLabel id="course" style={{ marginBottom: 5 }}>
-                Course
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="course"
-                value={value}
-                style={{ padding: 5 }}
-                onChange={onChange}
-              >
-                {[{ id: 0, name: "None" }, ...courses].map((course) => (
-                  <MenuItem value={course.id}>{course.name}</MenuItem>
-                ))}
-              </Select>
-            </div>
-          )}
-        />
-        <Controller
-          name="title"
+          name="code"
           rules={{
-            required: "Title cannot be empty",
+            required: "Course Code cannot be empty",
           }}
           control={control}
           defaultValue=""
           render={({ onChange, value }) => (
             <TextField
-              style={{ marginTop: 10 }}
-              error={errors?.title}
-              helperText={errors?.title?.message}
+              error={errors?.code}
+              helperText={errors?.code?.message}
               id="outlined-basic"
-              label="Material Title *"
-              variant="outlined"
-              size="small"
-              onChange={onChange}
-              value={value}
-            />
-          )}
-        />
-        <Controller
-          name="description"
-          rules={{
-            required: "Description cannot be empty",
-          }}
-          control={control}
-          defaultValue=""
-          render={({ onChange, value }) => (
-            <TextField
-              error={errors?.description}
-              helperText={errors?.description?.message}
-              id="outlined-basic"
-              label="Material Description"
+              label="Course Code"
               variant="outlined"
               size="small"
               onChange={onChange}
@@ -172,7 +125,7 @@ const JoinCourse = ({
           color="primary"
           style={{ marginTop: "15px" }}
         >
-          Add Material
+          Join Course
         </Button>
       </div>
     </Modal>

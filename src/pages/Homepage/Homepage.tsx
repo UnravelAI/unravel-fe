@@ -10,8 +10,12 @@ import {
 
 function Homepage({ isLoggedIn }: { isLoggedIn: boolean }) {
   if (isLoggedIn) {
+    const isTeacher = localStorage.getItem("isTeacher");
+    if (isTeacher) {
+      return <Redirect to="/dashboard" />
+    }
     return (
-      <Redirect to="/dashboard" />
+      <Redirect to="/student/dashboard" />
     );
   }
   return (

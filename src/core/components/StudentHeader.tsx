@@ -1,10 +1,8 @@
 import React from "react";
 import Logo from "../../assets/imgs/Logo.png";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 
 export default function Header({ active }: { active: string }) {
-  const history = useHistory();
   return (
     <div className="toparea mini-header">
       <div className="container">
@@ -22,17 +20,12 @@ export default function Header({ active }: { active: string }) {
             <nav>
               <Link
                 style={{ opacity: active === "Dashboard" ? 1 : 0.4 }}
-                to="/dashboard"
+                to="/student/dashboard"
               >
                 Dashboard
               </Link>
               <a
                 href="#"
-                onClick={() => {
-                  localStorage.removeItem('accessToken');
-                  localStorage.removeItem('isTeacher');
-                  history.push("/login");
-                }}
                 style={{
                   color: "white",
                   opacity: 1,
