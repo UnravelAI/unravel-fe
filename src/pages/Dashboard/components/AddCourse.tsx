@@ -104,8 +104,8 @@ const AddCourse = ({
           defaultValue=""
           render={({ onChange, value }) => (
             <TextField
-              error={errors?.description}
-              helperText={errors?.description?.message}
+              error={errors?.name}
+              helperText={errors?.name?.message}
               id="outlined-basic"
               label="Course Name"
               variant="outlined"
@@ -118,9 +118,9 @@ const AddCourse = ({
         />
 
         <Controller
-          name="name"
+          name="description"
           rules={{
-            required: "Name cannot be empty",
+            required: "Description cannot be empty",
           }}
           control={control}
           defaultValue=""

@@ -132,6 +132,7 @@ const MaterialsContainer = () => {
                 setActive={() => toggleActiveCourse(course.id)}
                 active={course.id === activeCourse ? true : false}
                 name={course.name}
+                code={course.code}
                 materialsLength={course.materials}
               />
             ))}
