@@ -10,6 +10,9 @@ const Dashboard = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   if (!isLoggedIn) {
     return <Redirect to="/login" />;
   }
+  if (localStorage.getItem("isTeacher") === "false") {
+    return <Redirect to="/student/dashboard" />;
+  }
   return (
     <>
       <DashboardHeader active="Dashboard" />

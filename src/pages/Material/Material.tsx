@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 // Page components
 import DashboardHeader from "../../core/components/DashboardHeader";
 import Footer from "../../core/components/Footer";
@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import ReactLoading from "react-loading";
 import VideoPlayer from "./VideoPlayer";
 import DocumentViewer from "./DocumentViewer";
+// UI
+import { Button } from "@material-ui/core";
 
 type Material = {
   id?: number;
@@ -27,7 +29,11 @@ const Material = () => {
   const [material, setMaterial] = useState<Material | null>(null);
   const [processing, setProcessing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [documentUploading, setDocumentUploading] = useState(false);
+  const [currentDocument, setCurrentDocument] = useState("");
 
+  const isTeacher = useMemo(() => localStorage.getItem("isTeacher"), []);
+  console.log(isTeacher);
   useEffect(() => {
     const getMaterial = async () => {
       try {
@@ -81,6 +87,31 @@ const Material = () => {
       setLoading(false);
     }
   };
+
+  const handleDocumentUpload = async (e: any) => {
+    try {
+      setDocumentUploading(true);
+      let formData = new FormData();
+      formData.append("documentName", e.target.files[0]);
+      await API.post(`/users/materials/${id}/document`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      toast.success("Your document has been uploaded succesfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      });
+    } catch (error) {
+    } finally {
+      setDocumentUploading(false);
+    }
+  };
   return (
     <>
       <DashboardHeader active="Dashboard" />
@@ -96,19 +127,14 @@ const Material = () => {
               </div>
             </div>
           )}
-          {material?.document.length > 0 ||
-          (!loading &&
+          {(!loading &&
             material?.video !== null &&
             material?.video?.status === "editable") ||
           material?.video?.status === "published" ? (
-            material?.document.length > 0 ? (
-              <DocumentViewer url={material?.document[0].fileUrl} />
-            ) : (
-              <VideoPlayer
-                material={material}
-                streamingURL={material?.video.streamingUrl}
-              />
-            )
+            <VideoPlayer
+              material={material}
+              streamingURL={material?.video.streamingUrl}
+            />
           ) : (
             <div className="videoContainer">
               {loading ? (
@@ -136,6 +162,79 @@ const Material = () => {
                   <label htmlFor="file">Upload File</label>
                 </>
               )}
+            </div>
+          )}
+          {currentDocument !== "" ? (
+            <div style={{ marginTop: 30 }}>
+              <Button
+                style={{ marginBottom: 20 }}
+                variant="contained"
+                color="primary"
+                onClick={() => setCurrentDocument("")}
+              >
+                Back to Documents
+              </Button>
+              <DocumentViewer url={currentDocument} />
+            </div>
+          ) : (
+            <div
+              style={{ backgroundColor: "#ced2eb", padding: 30, marginTop: 30 }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h5>Documents</h5>
+                {isTeacher === "true" ? (
+                  !documentUploading ? (
+                    <>
+                      <input
+                        onChange={handleDocumentUpload}
+                        type="file"
+                        name="file"
+                        id="document"
+                        className="inputdocument"
+                      />
+                      <label htmlFor="document">Upload Document</label>
+                    </>
+                  ) : (
+                    <ReactLoading color="#fff" className="loadingIcon" />
+                  )
+                ) : null}
+              </div>
+              {material?.document.length === 0 && (
+                <p style={{ marginTop: 10, color: "#979ec9" }}>
+                  No Documents for this material
+                </p>
+              )}
+              {material?.document?.map((doc: any) => (
+                <div
+                  style={{
+                    marginTop: 20,
+                    backgroundColor: "white",
+                    padding: 15,
+                    borderRadius: 5,
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <p>{doc.fileName}</p>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentDocument(doc.fileUrl);
+                    }}
+                  >
+                    View
+                  </a>
+                </div>
+              ))}
             </div>
           )}
         </div>

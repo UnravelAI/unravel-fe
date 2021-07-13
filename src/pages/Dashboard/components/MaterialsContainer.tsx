@@ -62,7 +62,7 @@ const MaterialsContainer = () => {
 
   const refreshMaterials = async () => {
     setLoading(true);
-    await fetchCourses();
+    await fetchMaterials();
     setLoading(false);
   };
 

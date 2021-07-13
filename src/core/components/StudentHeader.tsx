@@ -1,8 +1,10 @@
 import React from "react";
 import Logo from "../../assets/imgs/Logo.png";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export default function Header({ active }: { active: string }) {
+  const history = useHistory();
   return (
     <div className="toparea mini-header">
       <div className="container">
@@ -32,6 +34,11 @@ export default function Header({ active }: { active: string }) {
                   backgroundColor: "#bf3434",
                   padding: "5px 10px",
                   borderRadius: 5,
+                }}
+                onClick={() => {
+                  localStorage.removeItem("accessToken");
+                  localStorage.removeItem("isTeacher");
+                  history.push("/login");
                 }}
               >
                 Logout

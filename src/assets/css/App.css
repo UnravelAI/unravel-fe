@@ -289,6 +289,27 @@ footer .rights {
   transition: 0.5s all;
 }
 
+.inputdocument + label {
+  background-color: #25293f;
+  border-radius: 50px;
+  padding: 15px 25px;
+  border: 0;
+  font-size: 17;
+  font-weight: bold;
+  color: white;
+  align-self: center;
+  transition: 0.5s all;
+}
+
+.inputdocument {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
 .inputfile {
   width: 0.1px;
   height: 0.1px;
